@@ -12,6 +12,8 @@
 #include "gestionNFC.h"
 #include "gestionMouvement.h"
 #include "gestionFirestore.h"
+#include "gestionDel.h"
+#include "stateMachine.h"
 
 // sans cette ligne, l'ESP32 plante a cause de Firebase
 SET_LOOP_TASK_STACK_SIZE(16 * 1024);
@@ -76,9 +78,13 @@ void setup() {
   initNFC();
   //setup de firebase :
   setupFirestore();
+  //setup des DEL :
+  initDels();
+  //etat de depart :
+  initEtat();
 }
 
 void loop() {
   updateFlash();
-  updateServo();
+  updateEtat();
 }
